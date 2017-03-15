@@ -284,6 +284,11 @@ function twentysixteen_scripts() {
 		'expand'   => __( 'expand child menu', 'twentysixteen' ),
 		'collapse' => __( 'collapse child menu', 'twentysixteen' ),
 	) );
+	
+	/* AE load in aux style sheet */
+	wp_enqueue_style( 'style_custom', get_template_directory_uri().'/css/style_custom.css');
+	
+	
 }
 add_action( 'wp_enqueue_scripts', 'twentysixteen_scripts' );
 
@@ -419,3 +424,5 @@ function twentysixteen_widget_tag_cloud_args( $args ) {
 	return $args;
 }
 add_filter( 'widget_tag_cloud_args', 'twentysixteen_widget_tag_cloud_args' );
+
+
