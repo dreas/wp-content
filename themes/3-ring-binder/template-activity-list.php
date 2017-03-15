@@ -11,20 +11,14 @@
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-		
+		<main id="main" class="site-main" role="main">	
 		
 <?php '<!-- Start the header ------------------------------------------------------- -->' ?>
 
 <?php 
-
 	echo'<H1>'.get_post_field('post_title', $post->ID).'</H1>';
-	echo'<p> activity-list: build 0.1:</p>';
+	echo'<span class="site-info"> activity-list: build 0.1:</span>';
 	echo'<p>'.get_post_field('post_content', $post->ID).'</p>';
-	
-	
-	
 ?>
 		
 	
@@ -58,10 +52,11 @@
 					//echo 'pageTagsArray:'.$pageTagsArray[$loop].'<br>'; 
 					if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){
 						//echo 'Yes<br><br>';
-						echo 'id:'.$testId.' title:'.$page->post_title. '<br>';			
+						//echo '<h2>id:'.$testId.' title:'.$page->post_title. '</h2>';
+						echo '<h2>'.$page->post_title. '</h2>';			
 						//echo 'tags:'.$tagList.'<br>'; 
-						echo 'body:'.$page->post_content. '<br>';		
-						echo '<br>';
+						echo '<span>'.$page->post_content. '</span>';		
+						//echo '<br>';
 						//break;
 					}else{
 						//echo 'Nope<br><br>';
