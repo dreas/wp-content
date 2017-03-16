@@ -14,7 +14,7 @@ function getContent($excludeTags){
 	$pageTagsArray = explode(',',$pageTagsList);
 	$pageTagsArrayLength = count($pageTagsArray);
 
-	$returnContent = '';
+	$returnContent = 'init';
 
 	$args = array(
 		'sort_order'   => 'ASC',

@@ -3,7 +3,6 @@
 /* Author dreas1@me.com 03/2017 */
 /* Customisation for an 'activity template page */
 	
-	
 /* load shared scripts */
 	
 	include 'shared.php';
@@ -23,7 +22,7 @@
 
 <?php 
 	echo'<H1>'.get_post_field('post_title', $post->ID).'</H1>';
-	echo'<span class="site-info debug"> activity-list: build 0.4:</span>';
+	echo'<span class="site-info debug"> activity-list: build 0.5:</span>';
 	echo'<p>'.get_post_field('post_content', $post->ID).'</p>';
 ?>
 		
@@ -32,7 +31,7 @@
 
 	<?php
 	
-	echo getContent($excludeTags);
+		echo getContent($excludeTags);
 	
 // 		$args = array(
 // 			'sort_order'   => 'ASC',
