@@ -1,38 +1,41 @@
 <?php 
 /* Author dreas1@me.com 03/2017 */
 /* Shared scripts (mainly across the template scripts */
-
+//
+//---------------------------------------------------------------------------------------
+//
 function testCall(){
 	return 'testCall returning home';
 }
-
-
-
+//
+//---------------------------------------------------------------------------------------
+//
 function getContent($excludeTags){
 
 	$pageTagsList = get_the_tag_list('',',','');
 	$pageTagsArray = explode(',',$pageTagsList);
 	$pageTagsArrayLength = count($pageTagsArray);
 
-	$returnContent = 'init';
+	$returnContent = 'getContent:build 0.1<br>';
 
-	$args = array(
-		'sort_order'   => 'ASC',
-		'sort_column'  => 'menu_order',
-	);
+// 	$args = array(
+// 		'order'   => 'ASC',
+// 		'sort_column'  => 'ID'
+// 	);
+	
 	$mypages = get_pages($args);
 	
+	foreach( $mypages as $page ) {	
+		$returnContent .= 'menu order: '.$page->menu_order.' : '.$page->ID.' : '.$page->post_title.'<br>';
+	}
 	
 	
 	foreach( $mypages as $page ) {	
 		$testId = $page->ID;
 		$tagList = get_the_tag_list('',' ','',$testId);
 		$displayFlag = true;
-		
-		
-		
-		//echo '----------------------------------------------------<br>';
-		// identify if item should be actively excluded ----------------------------
+			
+		// identify if item should be actively excluded --------------------------
 		
 // 		$returnContent .= '$excludeTags:'.$excludeTags.'<br>';
 		
@@ -56,13 +59,12 @@ function getContent($excludeTags){
 // 				$returnContent .='testing:'.$testTag.' is in:'.$tagList.'<br>';
 // 				$returnContent .= 'outcome:'.(strpos($tagList,$testTag)).'<br>';
 // 				$returnContent .= 'pageTagsArray:'.$pageTagsArray[$loop].'<br>'; 
-				
-				
-				
+							
 				if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){
 					//echo 'Yes<br><br>';
+					//$returnContent .= '<p>'.$page->menu_order.'<p>';	
 					//echo '<h2>id:'.$testId.' title:'.$page->post_title. '</h2>';
-					$returnContent .= '<h2>'.$page->menu_order.':'.$page->post_title. '</h2>';			
+					$returnContent .= '<h2>'.$page->post_title. '</h2>';			
 					//echo 'tags:'.$tagList.'<br>'; 
 					$returnContent .= '<span>'.$page->post_content. '</span>';		
 					//echo '<br>';
@@ -73,10 +75,11 @@ function getContent($excludeTags){
 			}
 		}
 	}
-	
-	
+		
 	return $returnContent;
 }
-
+//
+//---------------------------------------------------------------------------------------
+//
 
 ?>
