@@ -1,6 +1,7 @@
-<?php /* Template Name: user-checklists */
-
-	/* Customisation for an 'role template page */
+<?php 
+/* Template Name: user-checklists */
+/* Author dreas1@me.com 03/2017 */
+/* Customisation for an 'role template page */
 	
 	$excludeTags = array('Role');
 	$pageTagsList = get_the_tag_list('',',','');
@@ -16,15 +17,17 @@
 
 <?php 
 	echo'<H1>'.get_post_field('post_title').'</H1>';
-	echo'<span class="site-info">Role overview-list: build 0.3:</span>';
+	echo'<span class="site-info debug">Role overview-list: build 0.4:</span>';
 	echo'<p>'.get_post_field('post_content').'</p>';
 ?>	
 	
 <?php '<!-- Pages in Array ---------------------------------------------------------- -->' ?>
 
-
 	<?php
-		$args = array();
+		$args = array(
+			'sort_order'   => 'ASC',
+			'sort_column'  => 'menu_order',
+		);
 		$mypages = get_pages($args);
 
 		foreach( $mypages as $page ) {	

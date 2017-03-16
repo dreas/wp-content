@@ -1,6 +1,7 @@
-<?php /* Template Name: template-home */
-
-	/* Customisation for the home  page */
+<?php 
+/* Template Name: template-home */
+/* Author dreas1@me.com 03/2017 */
+/* Customisation for the home  page */
 	
 // 	$excludeTags = array('Activity');
 // 	$pageTagsList = get_the_tag_list('',',','');
@@ -15,7 +16,7 @@
 	
 		echo '<!-- Start the header ------------------------------------------------------- -->';
 			echo'<H1>'.get_post_field('post_title', $post->ID).'</H1>';
-			echo'<span class="site-info"> site head (home): build 0.1:</span>';
+			echo'<span class="site-info debug"> site head (home): build 0.1:</span>';
 			echo'<p>'.get_post_field('post_content', $post->ID).'</p>';
 
 		echo '<!-- List Roles ------------------------------------------------------- -->';

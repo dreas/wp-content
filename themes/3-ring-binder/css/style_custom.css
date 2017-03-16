@@ -1,4 +1,5 @@
-/* Orverwrties for stock wp2016 css */
+/* Overwrites for stock wp2016 css */
+/* Authored by dreas1@me.com 03/2017 */
 
 body, input, select, textarea {
     color: #1a1a1a;
@@ -40,3 +41,64 @@ style.css?ver=4.7.3:3430
 .widget {
     margin-bottom: 2.307692em;
 }
+
+.widget .widget-title {
+	/* 
+font-family: inherit;
+	font-size: 22px;
+	font-size: 1em;
+	letter-spacing: 0.046875em;
+	line-height: 0.6em;
+	margin: 0 0 1.75em;
+ */
+	text-transform: none;
+}
+
+.textwidget h4 {
+	/* letter-spacing: 0.140625em; */
+	text-transform: none;
+}
+
+.pt-cv-content-item {
+	padding-bottom: 0px;
+}
+
+.pt-cv-ifield>*, .pt-cv-view .pt-cv-content-item>* {
+    margin-bottom: 40px;
+}
+
+.widget {
+	border-top: 2px solid #808080;
+	margin-bottom: 3.5em;
+	padding-top: 1.75em;
+}
+
+#main h2 {
+	margin-bottom: 15px;
+	border-top: 2px solid #808080;
+}
+
+.debug{
+    color: #dddddd;
+   /*  font-size: 13px; */
+    font-size: 0.8125rem;
+    line-height: 1.6153846154;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
