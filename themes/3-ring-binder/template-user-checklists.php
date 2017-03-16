@@ -22,15 +22,16 @@
 	echo'<p>'.get_post_field('post_content').'</p>';
 ?>	
 	
-<?php '<!-- Pages in Array ------------------------------------------------------- -->' ?>
+<?php echo'<!-- Pages in Array --------------------------------------------------- -->' ?>
 
 	<?php
 		echo getContent($excludeTags)
-	?>		
+	?>	
+		
+<?php echo'<!-- End pages in array ----------------------------------------------- -->' ?>
 
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
-
 
 <?php 
 	get_sidebar();

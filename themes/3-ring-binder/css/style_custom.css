@@ -1,6 +1,10 @@
 /* Overwrites for stock wp2016 css */
 /* Authored by dreas1@me.com 03/2017 */
 
+.site-content {
+	padding: 0 4.5455%;
+}
+
 body, input, select, textarea {
     color: #1a1a1a;
     font-family: Open Sans, Georgia, sans-serif;
@@ -16,6 +20,10 @@ body, input, select, textarea {
 	font-weight: 700;
 	line-height: 1.2173913043;
 	margin: 0;
+}
+
+.wp-custom-logo .site-title {
+    margin-top: 0em;
 }
 
 .site-header {
