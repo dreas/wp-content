@@ -16,18 +16,18 @@ function getContent($excludeTags){
 	$pageTagsArray = explode(',',$pageTagsList);
 	$pageTagsArrayLength = count($pageTagsArray);
 
-	$returnContent = 'getContent:build 0.1<br>';
+	$returnContent = '<span class="site-info debug">getContent:build 0.3</span><br>';
 
-// 	$args = array(
-// 		'order'   => 'ASC',
-// 		'sort_column'  => 'ID'
-// 	);
+	$args = array(
+		'order'=>'ASC',
+		'sort_column'=>'menu_order'
+	);
 	
 	$mypages = get_pages($args);
 	
-	foreach( $mypages as $page ) {	
-		$returnContent .= 'menu order: '.$page->menu_order.' : '.$page->ID.' : '.$page->post_title.'<br>';
-	}
+// 	foreach( $mypages as $page ) {	
+// 		$returnContent .= 'mo:'.$page->menu_order.' id: '.$page->ID.' title: '.$page->post_title.'<br>';
+// 	}
 	
 	
 	foreach( $mypages as $page ) {	
@@ -37,17 +37,22 @@ function getContent($excludeTags){
 			
 		// identify if item should be actively excluded --------------------------
 		
-// 		$returnContent .= '$excludeTags:'.$excludeTags.'<br>';
-		
+		// $returnContent .= 'mo:'.$page->menu_order.' id: '.$page->ID.' title: '.$page->post_title.'<br>';
+// 		$returnContent .= 'excludeTags:'.implode($excludeTags).'<br>';
+// 		$returnContent .= 'tagList:'.$tagList.'<br>';
+	
 		for ($loop = 0; $loop < count($excludeTags); $loop++) {
 			$testTag = $excludeTags[$loop];
 			
 // 			$returnContent .= '$testTag:'.$testTag.'<br>';
 			
-			if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){
+			if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){	
+				//$returnContent .= '<b>excluded</b><br>';
 				$displayFlag = false;
 			}
 		}	
+		
+// 		$returnContent .= '<br>';
 
 // 		$returnContent .= '$displayFlag:'.$displayFlag.'<br>';
 		
@@ -61,6 +66,9 @@ function getContent($excludeTags){
 // 				$returnContent .= 'pageTagsArray:'.$pageTagsArray[$loop].'<br>'; 
 							
 				if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){
+			
+					//$returnContent .= '<b>Match</b><br>';
+		
 					//echo 'Yes<br><br>';
 					//$returnContent .= '<p>'.$page->menu_order.'<p>';	
 					//echo '<h2>id:'.$testId.' title:'.$page->post_title. '</h2>';
@@ -82,4 +90,7 @@ function getContent($excludeTags){
 //---------------------------------------------------------------------------------------
 //
 
+//
+//---------------------------------------------------------------------------------------
+//
 ?>
