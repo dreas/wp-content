@@ -250,12 +250,12 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				return strip_shortcodes( $text );
 			}
 
-			global $shortcode_tags, $cv_sc_tagnames, $cv_sc_complete;
-			if ( $cv_sc_complete ) {
+			global $shortcode_tags, $cv_shortcode_tags_backup;
+			if ( !isset( $cv_shortcode_tags_backup ) ) {
 				$tagnames	 = array_keys( $shortcode_tags );
 				$tagregexp	 = join( '|', array_map( 'preg_quote', $tagnames ) );
 			} else {
-				$tagregexp = $cv_sc_tagnames;
+				$tagregexp = $cv_shortcode_tags_backup;
 			}
 
 			if ( $strip_all ) {
@@ -434,7 +434,6 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @param bool   $backend Get settings from Backend form
 		 */
 		static function settings_values_by_prefix( $prefix, $backend = FALSE ) {
-
 			$view_settings = PT_CV_Functions::get_global_variable( 'view_settings' );
 
 			if ( !$view_settings && $backend ) {
@@ -442,12 +441,12 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$view_settings = $pt_cv_admin_settings;
 			}
 
-			$result = array();
-
+			$result	 = array();
+			$strlen	 = strlen( $prefix );
 			foreach ( (array) $view_settings as $name => $value ) {
-				// If name of setting match with prefix string, got it name
-				if ( substr( $name, 0, strlen( $prefix ) ) === $prefix ) {
-					$result[ substr( $name, strlen( $prefix ) ) ] = $value;
+				// If name of setting match with prefix string, got it
+				if ( strpos( $name, $prefix ) === 0 ) {
+					$result[ substr( $name, $strlen ) ] = $value;
 				}
 			}
 
@@ -627,6 +626,8 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				return sprintf( __( 'Error: View %s may not exist', 'content-views-query-and-display-post-page' ), "<strong>$view_id</strong>" );
 			}
 
+			do_action( PT_CV_PREFIX_ . 'view_process_start' );
+
 			global $pt_cv_glb, $pt_cv_id;
 
 			if ( !isset( $pt_cv_glb ) ) {
@@ -668,7 +669,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$cv_live_id = $view_id;
 
 			if ( defined( 'PT_CV_DOING_PAGINATION' ) ) {
-				$sdata		 = CV_Session::get( $vdata_key, array( 'args' => '', 'dargs' => '' ) );
+				$sdata		 = CV_Session::get( $vdata_key, array( 'args' => '', 'dargs' => '', 'shortcode_params' => '' ) );
 				$args		 = $sdata[ 'args' ];
 				$dargs		 = $sdata[ 'dargs' ];
 				$sc_params	 = $sdata[ 'shortcode_params' ];
@@ -734,13 +735,21 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 					// Total number of pages
 					$items_per_page	 = (int) PT_CV_Functions::setting_value( PT_CV_PREFIX . 'pagination-items-per-page', $view_settings );
 					$max_num_pages	 = ceil( $total_items / $items_per_page );
+					$max_num_pages	 = (int) $max_num_pages;
 
 					// Output pagination
-					if ( (int) $max_num_pages > 0 ) {
+					if ( $max_num_pages > 1 ) {
 						$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $current_page, $pt_cv_id );
+					} else {
+						if ( $max_num_pages == 1 && defined( 'PT_CV_DOING_PREVIEW' ) ) {
+							$reason = sprintf( '%s %s', ($total_items == $found_posts) ? __( 'the number of results', 'content-views-query-and-display-post-page' ) : __( 'the <b>Limit</b> value', 'content-views-query-and-display-post-page' ), __( 'is less than or equal to (&le;) the <b>Items per page</b> value', 'content-views-query-and-display-post-page' ) );
+							$html .= "\n" . sprintf( '<p class="alert alert-warning" style="padding: 10px 5px">%s %s.</p>', __( '[Preview only] Pagination is disabled when there is only 1 page, because of', 'content-views-query-and-display-post-page' ), $reason );
+						}
 					}
 				}
 			}
+
+			do_action( PT_CV_PREFIX_ . 'view_process_end' );
 
 			return $html;
 		}

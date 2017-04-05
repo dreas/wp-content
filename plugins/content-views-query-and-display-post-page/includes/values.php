@@ -248,22 +248,29 @@ if ( !class_exists( 'PT_CV_Values' ) ) {
 		 * @return array
 		 */
 		static function user_list() {
+			global $cv_admin_users_list;
 
-			$result	 = array();
-			$show	 = 'display_name';
+			if ( !empty( $cv_admin_users_list ) ) {
+				$result = $cv_admin_users_list;
+			} else {
+				$result	 = array();
+				$show	 = 'display_name';
 
-			$args = array(
-				'fields'	 => array( 'ID', $show ),
-				'orderby'	 => 'display_name',
-				'order'		 => 'ASC',
-			);
+				$args = array(
+					'fields'	 => array( 'ID', $show ),
+					'orderby'	 => 'display_name',
+					'order'		 => 'ASC',
+				);
 
-			$users = get_users( apply_filters( PT_CV_PREFIX_ . 'user_list', $args ) );
-			foreach ( (array) $users as $user ) {
-				$user->ID	 = (int) $user->ID;
-				$display	 = !empty( $user->$show ) ? $user->$show : '(' . $user->user_login . ')';
+				$users = get_users( apply_filters( PT_CV_PREFIX_ . 'user_list', $args ) );
+				foreach ( (array) $users as $user ) {
+					$user->ID	 = (int) $user->ID;
+					$display	 = !empty( $user->$show ) ? $user->$show : '(' . $user->user_login . ')';
 
-				$result[ $user->ID ] = esc_html( $display );
+					$result[ $user->ID ] = esc_html( $display );
+				}
+
+				$cv_admin_users_list = $result;
 			}
 
 			return $result;

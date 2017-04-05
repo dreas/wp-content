@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Defines common constant
  *
@@ -38,8 +37,6 @@ define( 'PT_CV_VIEW_TYPE_OUTPUT', PT_CV_PATH . 'public/templates/' );
 // Enable/Disable debug mode
 define( 'PT_CV_DEBUG', false );
 
-// Script error
-define( 'PT_CV_SOLVE_SCRIPT_ERROR', 'cv_solve_script_error_181' );
 /**
  * Check if CV layout was damaged by theme/another plugin's style
  * @since 1.8.7

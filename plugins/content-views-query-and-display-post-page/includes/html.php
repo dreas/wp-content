@@ -389,7 +389,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 */
 		static function _field_title( $post, $fargs ) {
 			$title_class = apply_filters( PT_CV_PREFIX_ . 'field_title_class', PT_CV_PREFIX . 'title' );
-			$tag		 = apply_filters( PT_CV_PREFIX_ . 'field_title_tag', 'h4' );
+			$tag		 = !empty( $fargs[ 'title' ][ 'tag' ] ) ? $fargs[ 'title' ][ 'tag' ] : 'h4';
 			$title		 = get_the_title( $post );
 			if ( empty( $title ) ) {
 				$title = __( '(no title)', 'content-views-query-and-display-post-page' );
@@ -457,12 +457,6 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 					ob_start();
 					the_content();
 					$content = ob_get_clean();
-
-					# Strip any raw shortcode if it is not executed
-					global $cv_sc_complete;
-					if ( !$cv_sc_complete ) {
-						$content = PT_CV_Functions::cv_strip_shortcodes( $content, false );
-					}
 
 					break;
 			}
@@ -658,9 +652,10 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return type
 		 */
 		static function pagination_output( $max_num_pages, $current_page, $sid ) {
-			if ( !$max_num_pages || (int) $max_num_pages === 1 ) {
+			if ( !$max_num_pages ) {
 				return '';
 			}
+
 			global $cv_unique_id;
 			$dargs			 = PT_CV_Functions::get_global_variable( 'dargs' );
 			$pagination_btn	 = '';

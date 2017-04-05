@@ -77,6 +77,8 @@ class PT_Content_Views_Admin {
 		// Filter Title of Edit View page
 		add_filter( 'admin_title', array( $this, 'filter_admin_title' ), 10, 2 );
 
+		add_filter( PT_CV_PREFIX_ . 'field_title_settings', array( $this, 'filter_field_title_settings' ), 10, 2 );
+
 		// Custom hooks for both preview & frontend
 		PT_CV_Hooks::init();
 
@@ -262,6 +264,17 @@ class PT_Content_Views_Admin {
 			wp_dequeue_style( 'ssrc_grid_admin_styles' );
 			wp_dequeue_script( 'ssrc_grid_admin_scripts' );
 			wp_dequeue_script( 'chartjs' ); /* optimizePressExperiments/js/chart.min.js */
+
+			// WP Email Users plugin caused: click on tabs doesn't work
+			wp_dequeue_script( 'wp-email-user-script' );
+
+			// Remove style of theme Jobcareer, plugin WP Jobhunt
+			wp_dequeue_style( 'cs_admin_styles_css' );
+			wp_dequeue_style( 'jobcareer_admin_styles_css' );
+
+			// Remove style of theme Tesseract
+			wp_dequeue_style( 'tesseract-custom' );
+
 			do_action( PT_CV_PREFIX_ . 'remove_unwanted_assets' );
 		}
 	}
@@ -458,6 +471,20 @@ class PT_Content_Views_Admin {
 		}
 
 		return $admin_title;
+	}
+
+	/**
+	 * Add title heading setting to existed Title group in CVPro
+	 *
+	 * @since 1.9.7
+	 * @param array $result
+	 * @param type $prefix
+	 * @return type
+	 */
+	public function filter_field_title_settings( $result, $prefix ) {
+		array_unshift( $result, PT_CV_Settings::title_heading_tag( $prefix ) );
+
+		return $result;
 	}
 
 }

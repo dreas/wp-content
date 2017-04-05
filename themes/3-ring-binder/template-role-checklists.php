@@ -1,5 +1,5 @@
 <?php 
-/* Template Name: user-checklists */
+/* Template Name: role-checklists */
 /* Author dreas1@me.com 03/2017 */
 /* Customisation for an 'role template page */
 

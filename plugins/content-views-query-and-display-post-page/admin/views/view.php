@@ -224,7 +224,7 @@ PT_CV_Functions::view_submit();
 												'name'	 => 'limit',
 												'std'	 => '10',
 												'min'	 => '1',
-												'desc'	 => __( 'The number of posts to show. Leave empty to show all found posts', 'content-views-query-and-display-post-page' ),
+												'desc'	 => __( 'Total number of posts to show. Leave empty to show all found posts', 'content-views-query-and-display-post-page' ),
 											),
 										),
 									),

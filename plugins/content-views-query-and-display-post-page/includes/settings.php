@@ -284,7 +284,28 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 				// Upgrade to Pro: Drag & Drop
 				!get_option( 'pt_cv_version_pro' ) ? PT_CV_Settings::get_cvpro( __( 'Show Custom Fields, show Title above Thumbnail...', 'content-views-query-and-display-post-page' ), 12, 'margin-top: -15px; margin-bottom: 5px; width: 100%;' ) : '',
 				// Title settings
-				apply_filters( PT_CV_PREFIX_ . 'settings_title_display', array(), $prefix, $prefix2 ),
+				get_option( 'pt_cv_version_pro' ) ? apply_filters( PT_CV_PREFIX_ . 'settings_title_display', array(), $prefix, $prefix2 ) :
+					array(
+					'label'			 => array(
+						'text' => __( 'Title' ),
+					),
+					'extra_setting'	 => array(
+						'params' => array(
+							'group-class'	 => PT_CV_PREFIX . 'field-setting',
+							'wrap-class'	 => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'title-setting',
+						),
+					),
+					'params'		 => array(
+						array(
+							'type'	 => 'group',
+							'params' => array(
+								PT_CV_Settings::title_heading_tag( $prefix )
+							),
+						),
+					),
+					'dependence'	 => array( $prefix2 . 'title', 'yes' ),
+					)
+				,
 				// Thumbnail settings
 				array(
 					'label'			 => array(
@@ -873,6 +894,36 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 						'content'	 => $notice ?
 							sprintf( '<div class="alert alert-warning cvgopro"><strong>%s:</strong> %s</div>', __( 'Notice', 'content-views-query-and-display-post-page' ), $text . '.' ) :
 							sprintf( '<p class="text-muted cvgopro" style="%s">&rarr; %s</p>', $style, $text . $url ),
+					),
+				),
+			);
+		}
+
+		/**
+		 * Adjust title heading tag
+		 *
+		 * @since 1.9.7
+		 * @param string $prefix
+		 * @return array
+		 */
+		static function title_heading_tag( $prefix ) {
+			$tags = apply_filters( PT_CV_PREFIX_ . 'filter_title_tag', array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div' ) );
+
+			return array(
+				'label'			 => array(
+					'text' => __( 'HTML tag', 'content-views-query-and-display-post-page' ),
+				),
+				'extra_setting'	 => array(
+					'params' => array(
+						'wrap-class' => PT_CV_PREFIX . 'w200',
+					),
+				),
+				'params'		 => array(
+					array(
+						'type'		 => 'select',
+						'options'	 => array_combine( $tags, $tags ),
+						'name'		 => $prefix . 'title-tag',
+						'std'		 => apply_filters( PT_CV_PREFIX_ . 'field_title_tag', 'h4' ),
 					),
 				),
 			);

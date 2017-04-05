@@ -39,9 +39,6 @@ if ( !class_exists( 'PT_CV_Hooks' ) ) {
 			add_action( PT_CV_PREFIX_ . 'before_process_item', array( __CLASS__, 'action_before_process_item' ) );
 			add_action( PT_CV_PREFIX_ . 'after_process_item', array( __CLASS__, 'action_after_process_item' ) );
 			add_action( PT_CV_PREFIX_ . 'before_content', array( __CLASS__, 'action_before_content' ) );
-
-			// For only Frontend
-			add_action( 'init', array( __CLASS__, 'action_init' ), 1 );
 		}
 
 		/**
@@ -247,49 +244,24 @@ if ( !class_exists( 'PT_CV_Hooks' ) ) {
 			PT_CV_Functions::disable_view_shortcode( 'recovery' );
 		}
 
+		/**
+		 * Issue: shortcode is visible in pagination, preview
+		 * Solution: Backup shortcode tag in live page, to use for preview, pagination request
+		 *
+		 * @since 1.9.3
+		 */
 		public static function action_before_content() {
-			global $shortcode_tags, $cv_refresh_sct, $cv_get_sct, $cv_sc_tagnames, $cv_sc_complete;
-			$trans_key		 = 'cv_shortcode_tags_193';
-			# Make it theme independently
-			$cv_sc_complete	 = get_option( 'cv_save_sc_complete' );
+			global $shortcode_tags, $cv_shortcode_tags_backup;
 
-			if ( !defined( 'PT_CV_DOING_PAGINATION' ) && !defined( 'PT_CV_DOING_PREVIEW' ) ) {
-				if ( !$cv_refresh_sct ) {
-					if ( $cv_sc_complete ) {
-						set_transient( $trans_key, $shortcode_tags, HOUR_IN_SECONDS );
-					} else {
-						$tagnames		 = array_keys( $shortcode_tags );
-						$cv_sc_tagnames	 = join( '|', array_map( 'preg_quote', $tagnames ) );
-						set_transient( $trans_key, $cv_sc_tagnames, HOUR_IN_SECONDS );
-					}
-
-					$cv_refresh_sct = 1;
+			if ( !$cv_shortcode_tags_backup ) {
+				$trans_key = 'cv_shortcode_tags_193';
+				if ( !defined( 'PT_CV_DOING_PAGINATION' ) && !defined( 'PT_CV_DOING_PREVIEW' ) ) {
+					$tagnames					 = array_keys( $shortcode_tags );
+					$cv_shortcode_tags_backup	 = join( '|', array_map( 'preg_quote', $tagnames ) );
+					set_transient( $trans_key, $cv_shortcode_tags_backup, DAY_IN_SECONDS );
+				} else {
+					$cv_shortcode_tags_backup = get_transient( $trans_key );
 				}
-			} else {
-				if ( !$cv_get_sct && $stored_sct = get_transient( $trans_key ) ) {
-					if ( $cv_sc_complete ) {
-						$shortcode_tags = $stored_sct;
-					} else {
-						$cv_sc_tagnames = $stored_sct;
-					}
-
-					$cv_get_sct = 1;
-				}
-			}
-		}
-
-		public static function action_init() {
-			$user_can = current_user_can( 'administrator' ) || current_user_can( PT_CV_Functions::get_option_value( 'access_role' ) );
-			if ( !($user_can) ) {
-				return;
-			}
-
-			if ( !empty( $_GET[ PT_CV_SOLVE_SCRIPT_ERROR ] ) ) {
-				update_option( PT_CV_SOLVE_SCRIPT_ERROR, true, false );
-			}
-
-			if ( !empty( $_GET[ 'cv_undo_solve_error' ] ) ) {
-				delete_option( PT_CV_SOLVE_SCRIPT_ERROR );
 			}
 		}
 

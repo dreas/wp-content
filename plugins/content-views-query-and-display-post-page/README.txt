@@ -4,7 +4,7 @@ Donate link: https://www.contentviewspro.com/pricing/?utm_source=wporg&utm_mediu
 Tags: post, posts, page, pages, grid, author, category, categories, tag, responsive, title, thumbnail, content
 Requires at least: 3.3
 Tested up to: 4.7.3
-Stable tag: 1.9.6
+Stable tag: 1.9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,7 +116,13 @@ If you are using "Your latest posts" as home page, you should paste this code `<
 
 == Changelog ==
 
-= 1.9.6 - March 08 2017 =
+= 1.9.7 - 2017/03/28 =
+* New: Add setting to change HTML tag for Title
+* Update: Show message in Preview panel when enabled Pagination but there is only 1 page
+* Tweak: More useful information in Content Views >> Settings page
+* Improvement: Refactor some code to improve performance
+
+= 1.9.6 - 2017/03/08 =
 * Fix: Shortcode of "Visual Composer" plugin is visible in content of posts loaded by Ajax pagination
 * Fix: Show wrong order of posts, caused by impact of "Post Types Order" plugin
 * Update: Add Romania translation, thanks to "Dan Caragea"
@@ -125,49 +131,49 @@ If you are using "Your latest posts" as home page, you should paste this code `<
 * Update: Add Russian translation, thanks to @snakecom
 * Tweak: Add some filters to customize authors list, thumbnail, excerpt
 
-= 1.9.5 - February 08 2017 =
+= 1.9.5 - 2017/02/08 =
 * Fix: In some cases, HTML output of excerpt is broken when allows HTML tags in excerpt
 * Improvement: More clear and simple label, text for some settings
 * Update: Remove `<!-- [et_pb_line_break_holder] -->` of Divi theme from excerpt
 * Update: Hide empty `<p>` tag from excerpt (which can add unnecessary blank space to content area)
 * Update: Add default font-style normal for link & button
 
-= 1.9.4 - January 25 2016 =
+= 1.9.4 - 2017/01/25 =
 * New: Show link to add new View from Admin bar
 
-= 1.9.3.3 - January 21 2016 =
+= 1.9.3.3 - 2017/01/21 =
 * Fix: Correct output of Scrollable list in Tablet devices
 
-= 1.9.3.2 - January 11 2016 =
+= 1.9.3.2 - 2017/01/11 =
 * Update: simplify label of some settings in Add/Edit View page
 * Improvement: simplify code base and improve performance of Grid, Collapsible List
 * Improvement: some style adjustments for Scrollable List
 
-= 1.9.3.1 - December 27 2016 =
+= 1.9.3.1 - 2016/12/27 =
 * Update: Save temporary View data to WordPress transient if SESSION is not available
 * Improvement: Show all content of Collapsible list when printing
 
-= 1.9.3 - November 22 2016 =
+= 1.9.3 - 2016/11/22 =
 * Improvement: Remove prefix "by", "in" (before taxonomy, author) to save translation effort
 * Improvement: More accurate, time-saving mechanism to remove raw shortcodes text of other plugins in post content
 * Fix: "View maybe not exist" error, caused by custom filter hook (which modifies `post_type` in WordPress query) of another plugin
 
-= 1.9.2.1 - November 05 2016 =
+= 1.9.2.1 - 2016/11/05 =
 * Tweak: Update message when something went wrong, show exact error in Preview panel
 * Tweak: Update description for keyword setting
 * Tweak: Introduce filter "pt_cv_link_html" to modify HTML output of title, thumbnail, read-more button
 
-= 1.9.2 - October 24 2016 =
+= 1.9.2 - 2016/10/24 =
 * Revert force_balance_tags() for item HTML wrapper, to prevent broken output
 * Tweak: Remove unused functions
 * Tweak: Introduce filter "pt_cv_pagination_text" to customize pagination text
 
-= 1.9.1 - October 10 2016 =
+= 1.9.1 - 2016/10/10 =
 * Fix: XSS security flaw (a big thank to Tristan Madani)
 * Tweak: Improve logic/coding in settings processing, view output functions
 * Tweak: Update some descriptions in View dashboard
 
-= 1.9.0 - September 19 2016 =
+= 1.9.0 - 2016/09/19 =
 * Update: Make excerpt length works with languages which don't use spaces between words
 * Update: Validate session ID before using to prevent session hijacking
 
@@ -258,351 +264,6 @@ If you are using "Your latest posts" as home page, you should paste this code `<
 * Update: Disable sub View by default
 * Improvement: Better View dashboard (simplified text & description, improved styles & scripts, improved display in Tablet)
 * Improvement: Better performance by better solution
-
-= 1.7.5 =
-* New feature: Able to disable feature "responsive image" of WordPress 4.4 to prevent blurry thumbnail
-* New feature: Able to disable 2-columns format in Mobile devices & extra small screens
-* Update: Better output when shows only Title of post
-* Update: Add filter to allow HTML tags in heading of Collapsible list
-* Update: Decrease margin of thumbnail
-* Tweak: Add some filter hooks
-
-= 1.7.4 =
-* Bug fixed: "Session start" warning
-* Improvement: Rename & restructure Content Views menus in WordPress dashboard
-* Improvement: Remove/Update appended value (for example: 1 → 6) which can make misunderstand about limitation of some numerical settings
-
-= 1.7.3 =
-* Bug fixed: Empty date caused by custom hook to WordPress "get_the_date" filter (of another plugin/active theme)
-* Bug fixed: Different output between preview and front-end when excludes some posts (caused by Paid Membership Pro plugin)
-* Improvement: Improve code for better performance
-* Tweak: Rename 'In list' to 'Include only' and update its description
-* Tweak: Replace "Leave a comment" by "0 Comment"
-
-= 1.7.2 =
-* Improvement: Reduce processing time by optimizing conditional statements & functions
-* Bug fixed: "No post found" when one of selected terms is hierarchical and operator is AND
-* Bug fixed: Some style issues of pagination (caused by impact of style from active theme)
-* Tweak: Add more helpful descriptions about advanced features in Pro plugin
-
-= 1.7.1 =
-* Bug fixed: Fix error in some one-page themes
-* Update: Add woff2 file of Bootstrap font
-* Improvement: Code cleanup & remove no more used filters
-* Tweak: Add some filter actions
-
-= 1.7.0 =
-* Improvement: Completely avoid layout issues or style conflict with theme
-* Bug fixed: Collapsible layout does not animate smoothly
-* Improvement: Disable annoy scroll when select content type
-* Tweak: Update text, description of some settings
-* Tweak: Add filter 'post_types_taxonomies', 'view_executed', filter to hide output if No post found
-
-= 1.6.8.4 =
-* Bug fixed: Solve problems with category/tag name in non-latin languages
-* Improvement: Use cleaner loading icon
-* Tweak: Add class for <a> tag of thumbnail
-* Tweak: Add filter to load Content Views assets (styles, scripts) only in page which uses View
-* Tweak: Add filter to allow All HTML tags in excerpt
-
-= 1.6.8.3 =
-* Tweak: Change text domain from "content-views" to "content-views-query-and-display-post-page" and update pot file (prepare for language packs at http://translate.wordpress.org)
-
-= 1.6.8.2 =
-* Bug fixed: Trimming excerpt of non-latin languages cause broken characters
-
-= 1.6.8.1 =
-* Bug fixed: Excerpt length
-
-= 1.6.8 =
-* Improvement: More elegant UI for Fields settings
-* Improvement: Performance improvement by merging filers
-* Bug fixed: Slug of term on Non-Latin languages does not show correctly
-* Bug fixed: Fix Javascript error "Uncaught query function not defined for Select2 undefined"
-* Update: Add filter "terms_include_this" to exclude terms from meta-fields output
-* Update: CSS improvements
-
-
-= 1.6.7 =
-* Bug fixed: Missing section in some one-page themes when put multiple View shortcodes to sections
-* Update: Revert filter "view_type_dir"
-* Tested up to: 4.3.1
-
-= 1.6.6 =
-* Bug fixed: Layout of Scrollable List was broken if active theme uses classes of Bootstrap carousel
-* Bug fixed: Page is not activated when click on pagination button in Preview
-* Update: Little improvement on output of Collapsible List
-* Update: Add filter to modify date format
-* Update: Rename 'Regular pagination' to 'Numbered pagination'
-
-= 1.6.5.2 =
-* Tested in WordPress 4.3
-* Update: Update Content Views icon
-* Update: Add new filter to customize current page of pagination
-* Update: Print debug message (if the debug mode is enable: PT_CV_DEBUG = true)
-
-= 1.6.5.1 =
-* Bug fixed: Duplicate callback called after pagination finished
-* Tested in WordPress 4.2.4
-
-= 1.6.5 =
-* Update: Big update to improve page performance
-
-= 1.6.4 =
-* Bug fixed: Can't translate content
-
-= 1.6.3.1 =
-* Improvement: Prevent negative value for some setting options
-
-= 1.6.3 =
-* Bug fixed: Date of post is incorrect in some cases
-* Bug fixed: Dropdown menu is hidden
-
-= 1.6.2.1 =
-* Bug fixed: Redirect to new View page when click "Save" button
-
-= 1.6.2 =
-* Security: Fix XSS Vulnerability problem
-* Bug fixed: Plugin does not rendering anything sometimes
-* Bug fixed: Title is missing when move Bootstrap to top of all styles
-* Improvement: Optimize CSS properties
-
-= 1.6.1 =
-* Update: Update translation function & re-generate .po file
-* Bug fixed: Call non-static function
-
-= 1.6.0 =
-* Tested up to: 4.2.2
-* Bug fixed: Fix WordPress bug which can't get valid thumbnail if meta field "_thumbnail_id" is string value instead of integer value
-* Update: Add class for taxonomies in View output
-* Bug fixed: Multiple paginations don't work in same page
-* Update: Restructure plugin's core functions
-
-= 1.5.7.1 =
-* Update: Show confirm message before close a View page to prevent missing changes
-* Tested up to: 4.2.1
-
-= 1.5.7 =
-* Update: Some update styles for Scrollable, Collapsible layouts
-
-= 1.5.6 =
-* Bug fixed: "undefined" Bootstrap stylesheet link
-* Update: Add some custom filters
-
-= 1.5.5 =
-* Bug fixed: Multiple paginations on same page do not work
-* Bug fixed: Fix some UI bugs in Add/Edit View page
-
-= 1.5.4 =
-* Bug fixed: "Invalid post type" error in "All Views" page
-* Update: Better responsive output of Scrollable List on Mobile
-* Update: Auto changes line-breaks in the excerpt into HTML paragraphs (if allows HTML tags in excerpt)
-* Tested up to: 4.1.1
-
-= 1.5.3 =
-* Update: Supports qTranslate family plugins (qTranslate, mqTranslate, qTranslate-X)
-
-= 1.5.2 =
-* Bug fixed: Scrollable list does not show navigation and indicator
-* Bug fixed: Prevent duplicated content caused by other plugins (translation plugins...)
-
-= 1.5.1 =
-* Bug fixed: Javascript error in WordPress version 3.4
-* Improvement: Code & description clearance
-
-= 1.5.0 =
-* New feature: Able to use Normal pagination (without Ajax)
-* Update: Add filter allows to customize labels for pagination
-
-= 1.4.9 =
-* Update: Able to check/uncheck to allow HTML tags in excerpt (to preventing broken HTML output)
-
-= 1.4.8 =
-* Bug fixed: Some code appears in excerpt
-
-= 1.4.6 =
-* Improvement: Allow some HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt
-* Update: Exclude Views from front-end search results
-
-= 1.4.5 =
-* Test up to 4.1
-* Improvement: Add shortcode column to All Views page
-* Improvement: Add some css properties to prevent style overwrite problem
-
-= 1.4.4 =
-* Bug fixed: Length of excerpt is wrong if there is filter of other plugins or active theme
-* Improvement: GUI improvement in "Fields settings" group
-
-= 1.4.3 =
-* Bug fixed: Scrollable list without image display blank output
-* Bug fixed: Position of pagination button is incorrect after pagination finished (in some case)
-* Improvement: Code refinement
-
-= 1.4.2 =
-* Bug fixed: Style of Panel (.panel) is weird
-
-= 1.4.1 =
-* Bug fixed: Excerpt show stranger character if content of post contains nothing but a url
-* Bug fixed: Height of thumbnail does not match the thumbnail size setting if current WordPress theme set CSS 'min-width' property for images
-
-= 1.4.0 =
-* Bug fixed: Grid only shows 1 column
-* Improvement: Update description, styles, refine code
-
-= 1.3.9 =
-* Bug fixed: Menu bar is disappeared
-
-= 1.3.8 =
-* Bug fixed: Admin bar is hidden on pages which do not use View
-* Bug fixed: Fix warning message in Dashboard
-* Improvement: Don't auto expand width of items (follow 'Items per row' setting completely)
-
-= 1.3.6 =
-* Improvement: A very new customized Bootstrap style
-* Bug fixed: script which hooks to wp_footer is not loaded
-
-= 1.3.5.1 =
-* Bug fixed: Bootstrap style ruins theme layout
-
-= 1.3.5 =
-* Bug fixed: Show more posts than Limit value in some cases when pagination is enable
-* Improvement: Customized Bootstrap style which only contains necessary properties
-* Update: Display inline assets of View right after HTML if possible
-* Update: Refine Javascript code for Preview/Front-end
-
-= 1.3.4.1 =
-* Improvement: Clean up 'Read more' button code
-* Improvement: Remove unused code of Order setting
-
-= 1.3.4 =
-* Bug fixed: Read more button is invisible (color is white and no background color)
-* Update: Able to set 0 as 'Excerpt length'
-
-= 1.3.3 =
-* Bug fixed: Return 'Empty settings' message for pagination request
-
-= 1.3.2 =
-* Update: Official refined Bootstrap version (bring here from Pro plugin)
-* Update: Apply "Open in" setting for "Read more" button, too
-* Bug fixed: Get wrong excerpt if content of post contains shortcode tags
-
-= 1.3.1.9 =
-* Update: Add some new hook for customizing options
-
-= 1.3.1.8 =
-* Bug fixed: Fix row style bug
-
-= 1.3.1.6 =
-* Improvement: Update page title as "Edit View" in edit View page
-* Bug fixed: Fix some warnings in PHP 5.2
-
-= 1.3.1.5 =
-* Test up to 4.0
-
-= 1.3.1.4 =
-* Update: Fix some layout problems by influence of "box-sizing" property of Bootstrap
-* Improvement: Code improvement for Grid rendering
-
-= 1.3.1.3 =
-* Update: Restructure Taxonomy filter (remove "Not In" list, add operator[In, Not in, And])
-
-= 1.3.1.2 =
-* Bug fixed: Loosing translation (WPML) in Ajax pagination
-* Improvement: Performance optimization (when get settings of View)
-* Improvement: Update style if only Title is selected to display (to have a more beautiful list of Posts title)
-
-= 1.3.1.1 =
-* Bug fixed: Thumbnail dimensions are empty
-* Improvement: CSS code refinement
-
-= 1.3.1 =
-* Update: Important update about caching mechanism
-* Update: Update translation file
-
-= 1.3.0.2 =
-* Refine Javascript code
-* Update description in Setting page
-
-= 1.3.0.1 =
-* Update filter priority
-* Update plugin description
-
-= 1.3.0 =
-* Bug fixed: Pagination returns Empty settings
-* Improvement: UI improvement (Add icon to tabs. Show shortcode in text field for easier selecting. )
-* Improvement: Assets loading improvement
-
-= 1.2.6 =
-* Fix bug: Javascript error of missing function
-* Update description for some options
-* Update styles
-
-= 1.2.5 =
-* Fix bug: does not save Layout format value when select '2 columns' option
-* Fix notice about constant value
-
-= 1.2.4 =
-* Update translation feature: load translation file from /wp-content/languages/content-views/
-* Fix pagination bug
-
-= 1.2.3 =
-* Fix warning: Cannot send session cache limiter - headers already sent
-
-= 1.2.2 =
-* Performance optimization for pagination request
-* Add translation file (.po)
-
-= 1.2.1 =
-* Fix pagination bug if number of pages > 10
-* Fix bug of Preview button: click event fires twice
-* Enable other user roles (Editor, Author, Contributor) to see Content Views menu and manage Views
-
-= 1.2.0 =
-* Remove shortcodes in excerpt
-* Fix Scroll bug when click Show/Hide preview
-* Update Pagination setting
-* Optimize filters system
-* Compatibility update
-
-= 1.1.6 =
-* Fix bug auto selected terms which its value is number in Taxonomy settings box
-
-= 1.1.5 =
-* Fix pagination bug (return 0)
-
-= 1.1.4 =
-* Fix pagination bug when don't load Bootstrap in front-end
-
-= 1.1.3 =
-* Add option to Settings page to enable/disable load Bootstrap in front-end
-* Enable to search by View ID in "All Views" page
-* Fix bug Scrollable List (when slide count = 1)
-* Update settings page
-* Add some custom filters
-
-= 1.1.2 =
-* Fix offset bug
-
-= 1.1.1 =
-* Fix pagination bug
-
-= 1.1 =
-* Add "Parent page" option to query child pages of a parent page
-* Show shortcode [pt_view id="VIEW_ID"] to able to copy in editing page of a View
-* Add link to Thumbnail
-* Update Settings page
-* Fix import/export bugs
-* Classify "Add New View" vs "Edit View"
-
-= 1.0.2 =
-* Add some WP filters
-* Add main action for Pro plugin to trigger
-
-= 1.0.1 =
-* Adjust styles
-
-= 1.0.0 =
-* Initial release
 
 
 

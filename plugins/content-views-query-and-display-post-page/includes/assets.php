@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Asset management
  *
@@ -139,7 +138,7 @@ if ( !class_exists( 'PT_CV_Asset' ) ) {
 				$last_param = isset( $data[ 'media' ] ) ? $data[ 'media' ] : 'all';
 			} else {
 				// Auto enqueue script in footer
-				$last_param = isset( $data[ 'in_footer' ] ) ? $data[ 'in_footer' ] : self::load_script_in_footer();
+				$last_param = isset( $data[ 'in_footer' ] ) ? $data[ 'in_footer' ] : true;
 			}
 			$function = "wp_{$action}_{$type}";
 			if ( function_exists( $function ) ) {
@@ -186,15 +185,6 @@ if ( !class_exists( 'PT_CV_Asset' ) ) {
 					printf( "<link rel='stylesheet' id='%s' href='%s' type='text/css' media='all' />", esc_attr( $handle ), esc_url( $src ) );
 					break;
 			}
-		}
-
-		/**
-		 * Check if load script at footer (by default) or header (when there was JS error/issue caused by another script)
-		 * @since 1.7.9
-		 * @return type
-		 */
-		private static function load_script_in_footer() {
-			return is_admin() ? true : !get_option( PT_CV_SOLVE_SCRIPT_ERROR );
 		}
 
 	}

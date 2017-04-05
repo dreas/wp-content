@@ -18,17 +18,17 @@ if ( !function_exists( 'cv_filter_js_defer' ) ) {
 
 }
 
-# Page Builder by SiteOrigin: incorrect excerpt
-add_filter( 'pt_cv_field_content_excerpt', 'cv_field_content_excerpt_siteorigin', 9, 3 );
-if ( !function_exists( 'cv_field_content_excerpt_siteorigin' ) ) {
-	function cv_field_content_excerpt_siteorigin( $args, $fargs, $this_post ) {
-		// Prevent recursive call
-		if ( empty( $fargs ) ) {
-			return $args;
-		}
+add_filter( 'pt_cv_field_content_excerpt', 'cv_filter_fce', 9, 3 );
+if ( !function_exists( 'cv_filter_fce' ) ) {
+	function cv_filter_fce( $args, $fargs, $this_post ) {
 
+		# Page Builder by SiteOrigin: Fix incorrect excerpt
 		if ( function_exists( 'siteorigin_panels_filter_content' ) ) {
-			$args = siteorigin_panels_filter_content( $args );
+			if ( !isset( $this_post->cv_so_content ) ) {
+				$this_post->cv_so_content = siteorigin_panels_filter_content( $args );
+			}
+
+			$args = $this_post->cv_so_content;
 		}
 
 		return $args;
@@ -82,7 +82,7 @@ if ( !function_exists( 'cv_divitheme_before_generate_excerpt' ) ) {
 add_action( 'pt_cv_before_content', 'cv_fix_shortcode_visible_in_pagination', 9 );
 if ( !function_exists( 'cv_fix_shortcode_visible_in_pagination' ) ) {
 	function cv_fix_shortcode_visible_in_pagination() {
-		if ( defined( 'PT_CV_DOING_PAGINATION' ) && method_exists( 'WPBMap', 'addAllMappedShortcodes' ) ) {
+		if ( (defined( 'PT_CV_DOING_PAGINATION' ) || defined( 'PT_CV_DOING_PREVIEW' )) && class_exists( 'WPBMap' ) && method_exists( 'WPBMap', 'addAllMappedShortcodes' ) ) {
 			WPBMap::addAllMappedShortcodes();
 		}
 	}
