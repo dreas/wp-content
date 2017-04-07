@@ -7,6 +7,7 @@
 	include 'shared.php';
 	
 	$excludeTags = array('Activity');
+	$includeTags = array('Role');
 
 	get_header();
 ?>
@@ -18,14 +19,14 @@
 
 <?php 
 	echo'<H1>'.get_post_field('post_title').'</H1>';
-	echo'<span class="site-info debug">activity-list: build 0.5:</span>';
+	//echo'<span class="site-info debug">activity-list: build 0.5:</span>';
 	echo'<p>'.get_post_field('post_content').'</p>';
 ?>
 		
 <?php echo'<!-- Pages in Array --------------------------------------------------- -->' ?>
 
 	<?php
-		echo getContent($excludeTags);
+		echo getContent($excludeTags,$includeTags);
 	?>		
 
 <?php echo'<!-- End pages in array ----------------------------------------------- -->' ?>

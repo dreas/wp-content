@@ -4,115 +4,161 @@
 //
 //---------------------------------------------------------------------------------------
 //
-function testCall(){
-	return 'testCall returning home';
-}
-//
-//---------------------------------------------------------------------------------------
-//
-function getContent($excludeTags){
+function getContent($excludeTags,$includeTags){
+	$returnContent = '<span class="site-info debug">getContent:build 1.0</span><br>';
+	//-------------------------------------------
+	// get the tags in current page
+	
+	$thisPageTagsArray = explode(',',get_the_tag_list('',',',''));
 
-	$pageTagsList = get_the_tag_list('',',','');
-	$pageTagsArray = explode(',',$pageTagsList);
-	$pageTagsArrayLength = count($pageTagsArray);
+	//-------------------------------------------
+	// Clean Array
+	
+	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
+		$singleTag = $thisPageTagsArray[$loop];
+		
+		$thisPageTagsArray[$loop] = delete_all_between('<', '>', $singleTag);
 
-	$returnContent = '<span class="site-info debug">getContent:build 0.5</span><br>';
+	}
+	
+	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
+		$singleTag = $thisPageTagsArray[$loop];
+		
+		$thisPageTagsArray[$loop] = delete_all_between('<', '>', $singleTag);
 
+	}
+
+	//-------------------------------------------
+	// Remove excludeTags from Array
+	
+	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
+		$singleTag = $thisPageTagsArray[$loop];
+		for ($loop2 = 0; $loop2 < count($excludeTags); $loop2++) {
+			
+			If (findWord(false, $singleTag, $excludeTags[$loop2])){
+
+				unset($thisPageTagsArray[$loop]); // remove item at index 0
+			}
+		}
+	
+		//$returnContent .='<span class="site-info debug">tag:'.$loop.':'.$singleTag.'</span><br>';
+	}
+
+	//-------------------------------------------
+	// Add includeTags to Array
+	
+	$thisPageTagsArray = array_merge ( $thisPageTagsArray,$includeTags);
+	
+	//-------------------------------------------
+	// Demo what we've got
+	
+	$returnContent .='<span class="site-info debug">Updated Tags from page</span><br>';
+	
+	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
+		$singleTag = $thisPageTagsArray[$loop];
+
+		$returnContent .='<span class="site-info debug">tag :'.$loop.': '.$singleTag.'</span><br>';
+		
+			for ($loopB = 0; $loopB < strlen($singleTag); $loopB++) {
+				
+				//$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.substr($tagPageList[$loop],$loopB,$loopB).':</span><br>';
+				
+// 				$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.$singleTag[$loopB].':</span><br>';
+			}	
+		
+	}	
+	
+	$returnContent .='<span class="site-info debug">-------------------------------------</span><br>';
+	
+	//-------------------------------------------
+	// make a list of all pages
 	$args = array(
 		'order'=>'ASC',
 		'sort_column'=>'menu_order'
 	);
-	
-	$mypages = get_pages($args);
 
-	//---------------------------------------------------------------------------------
-	// Find if either 'Arrk' or 'Customer is in the tag list and add the opposite to the exclude list
+	$allPages = get_pages($args);	
 		
-	for ($loop = 0; $loop < $pageTagsArrayLength; $loop++) {
-		$singleTag = $pageTagsArray[$loop];
-		//$returnContent .='<span class="site-info debug">single tag: '.$singleTag.'</span><br>';
+	//-------------------------------------------
+	//cycle through each other page and decide if it should be included
+	foreach( $allPages as $page ) {	
+		$testPageId = intval($page->ID);
+		$tagPageList = explode(',',get_the_tag_list('',',','',$testPageId));
 		
-		If (findWord(false, $singleTag, 'Arrk')){
-			//$returnContent .= "Arrk Role<br>";
+		//$returnContent .= '<span class="site-info debug">mo:'.$page->menu_order.' id: '.$testPageId.' title: '.$page->post_title.'</span><br>';
+		//$returnContent .= '<span class="site-info debug">tagList:'.$tagPageList.'</span><br>';
+		//$returnContent .= '<span class="site-info debug">tagList size :'. count($tagPageList).'</span><br>';
+		
+		for ($loop = 0; $loop < count($tagPageList); $loop++) {
+			$tagPageList[$loop] = delete_all_between('<', '>', $tagPageList[$loop]);
+//			$returnContent .= '<span class="site-info debug">tagitem:'.$loop.' :'.$tagPageList[$loop].':</span><br>';
+		
 			
-			array_push($excludeTags,"Customer");
-		}else{
-			//$returnContent .= "Not Arrk<br>";	
+// 			for ($loopB = 0; $loopB < strlen($tagPageList[$loop]); $loopB++) {
+// 				
+// 				//$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.substr($tagPageList[$loop],$loopB,$loopB).':</span><br>';
+// 				
+// 				$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.$tagPageList[$loop][$loopB].':</span><br>';
+// 			}	
+			
 		}
 		
-		If (findWord(false, $singleTag, 'Customer')){
-			//$returnContent .= "Got Customer<br>";
+		for ($loop = 0; $loop < count($tagPageList); $loop++) {
+			$tagPageList[$loop] = delete_all_between('<', '>', $tagPageList[$loop]);
+//			$returnContent .= '<span class="site-info debug">tagitem:'.$loop.' :'.$tagPageList[$loop].':</span><br>';
+		
 			
-			array_push($excludeTags,"Arrk");
-		}else{
-			//$returnContent .= "Not Customer<br>";	
+// 			for ($loopB = 0; $loopB < strlen($tagPageList[$loop]); $loopB++) {
+// 				
+// 				//$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.substr($tagPageList[$loop],$loopB,$loopB).':</span><br>';
+// 				
+// 				$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.$tagPageList[$loop][$loopB].':</span><br>';
+// 			}	
+			
 		}
 		
-	}	
-
-	//$returnContent .='<span class="site-info debug">exclude tags: '.implode(" ",$excludeTags).'</span><br>';
-
-	//---------------------------------------------------------------------------------
-	
-	
-	foreach( $mypages as $page ) {	
-		$testId = $page->ID;
-		$tagList = get_the_tag_list('',' ','',$testId);
-		$displayFlag = true;
-			
-// 		$returnContent .= 'mo:'.$page->menu_order.' id: '.$page->ID.' title: '.$page->post_title.'<br>';
-// 		$returnContent .= 'excludeTags:'.implode($excludeTags).'<br>';
-// 		$returnContent .= 'tagList:'.$tagList.'<br>';
-	
-			//identify if item should be actively excluded --------------------------------		
-
-		// Exlude role pages from being shown within a role page -----------------------
-		for ($loop = 0; $loop < count($excludeTags); $loop++) {
-			$testTag = $excludeTags[$loop];
-			
-// 			$returnContent .= '$testTag:'.$testTag.'<br>';
-			
-			if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){	
-// 				$returnContent .= '<b>excluded</b><br>';
-				$displayFlag = false;
-			}
-		}	
-		
-		
-
-		
-		
-		
-		
-		
-// 		$returnContent .= '<br>';
-// 		$returnContent .= '$displayFlag:'.$displayFlag.'<br>';
-		
-		// 	insert content from other pages that match tags -------------------------
-		if ($displayFlag){	
-			for ($loop = 0; $loop < count($pageTagsArray); $loop++) {
-				$testTag = $pageTagsArray[$loop];
-			
-				// $returnContent .='testing:'.$testTag.' is in:'.$tagList.'<br>';
-// 				$returnContent .='outcome:'.(strpos($tagList,$testTag)).'<br>';
-				$returnContent .= $loop.': pageTagsArray:'.$pageTagsArray[$loop].' == '.$tagList.'<br>';
-
-				if( strpos($tagList,$testTag) || strpos($tagList,$testTag)===0){
-				
-// 					$returnContent .='<span class="site-info debug">testing:'.$testTag.' is in:'.$tagList.'</span><br>';
-// 					$returnContent .='<span class="site-info debug">outcome:'.(strpos($tagList,$testTag)).'</span><br>';
-// 					$returnContent .= '<span class="site-info debug">mo:'.$page->menu_order.' id: '.$page->ID.'</span><br>';	
+		// $thisPageTagsArray = array('Role');
+// 		
+		$containsSearch = count(array_intersect($thisPageTagsArray, $tagPageList)) == count($thisPageTagsArray);
+// 		
+// 		$returnContent .= '<span class="site-info debug">Match:'.$containsSearch.'</span><br>';
+// 		
+// 		$returnContent .='<span class="site-info debug">---------------</span><br>';
 					
-					
-					$returnContent .= '<h2>'.$page->post_title. '</h2>';		
-					$returnContent .= '<span>'.$page->post_content. '</span>';		
+// 		$returnContent .= '<span class="site-info debug">mo:'.$page->menu_order.' id: '.$page->ID.' title: '.$page->post_title.'</span><br>';
 
-				}
-			}
-			$returnContent .= '<br>';
+
+		if ($containsSearch){
+			$returnContent .= '<h2>'.$page->post_title. '</h2>';		
+			$returnContent .= '<span>'.$page->post_content. '</span>';
 		}
+	
 	}
+	
+	
+	
+	
+	
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	//--------------------------------------------------------------------------------
+	// All done, return outcome
 	return $returnContent;
 }
 //
@@ -135,6 +181,27 @@ function findWord($caseSensitive, $testString, $findWord) {
     }
 
 }
+//
+//---------------------------------------------------------------------------------------
+//
+function delete_all_between($beginning, $end, $string) {
+  $beginningPos = strpos($string, $beginning);
+  $endPos = strpos($string, $end);
+  if ($beginningPos === false || $endPos === false) {
+    return $string;
+  }
+
+  $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+
+  return str_replace($textToDelete, '', $string);
+}
+//
+//---------------------------------------------------------------------------------------
+//
+function testCall(){
+	return 'testCall returning home';
+}
+
 //
 //---------------------------------------------------------------------------------------
 //
