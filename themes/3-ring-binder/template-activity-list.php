@@ -7,7 +7,7 @@
 	include 'shared.php';
 	
 	$excludeTags = array('Activity');
-	$includeTags = array('Role');
+	$includeTags = array('Checklist');
 
 	get_header();
 ?>

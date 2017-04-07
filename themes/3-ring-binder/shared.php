@@ -5,7 +5,7 @@
 //---------------------------------------------------------------------------------------
 //
 function getContent($excludeTags,$includeTags){
-	$returnContent = '<span class="site-info debug">getContent:build 1.0</span><br>';
+	//$returnContent = '<span class="site-info debug">getContent:build 1.0</span><br>';
 	//-------------------------------------------
 	// get the tags in current page
 	
@@ -13,18 +13,19 @@ function getContent($excludeTags,$includeTags){
 
 	//-------------------------------------------
 	// Clean Array
-	
-	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
-		$singleTag = $thisPageTagsArray[$loop];
-		
-		$thisPageTagsArray[$loop] = delete_all_between('<', '>', $singleTag);
 
-	}
-	
 	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
 		$singleTag = $thisPageTagsArray[$loop];
-		
+
+// 		$returnContent .='<span class="site-info debug">do : '.$loop.'</span><br>';
+// 		$returnContent .='<span class="site-info debug">strpos:'.$loop.':'.strpos($thisPageTagsArray[$loop], '>').'</span><br>';
+
 		$thisPageTagsArray[$loop] = delete_all_between('<', '>', $singleTag);
+		
+		if (strpos($thisPageTagsArray[$loop], '>')){
+// 			$returnContent .='<span class="site-info debug">not clean</span><br>';
+			$loop--;
+		}
 
 	}
 
@@ -52,23 +53,16 @@ function getContent($excludeTags,$includeTags){
 	//-------------------------------------------
 	// Demo what we've got
 	
-	$returnContent .='<span class="site-info debug">Updated Tags from page</span><br>';
+	//$returnContent .='<span class="site-info debug">Updated Tags from page</span><br>';
 	
 	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
 		$singleTag = $thisPageTagsArray[$loop];
 
-		$returnContent .='<span class="site-info debug">tag :'.$loop.': '.$singleTag.'</span><br>';
-		
-			for ($loopB = 0; $loopB < strlen($singleTag); $loopB++) {
-				
-				//$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.substr($tagPageList[$loop],$loopB,$loopB).':</span><br>';
-				
-// 				$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.$singleTag[$loopB].':</span><br>';
-			}	
-		
+		$returnContent .='<span class="site-info debug">'.$singleTag.', </span>';
+
 	}	
 	
-	$returnContent .='<span class="site-info debug">-------------------------------------</span><br>';
+// 	$returnContent .='<span class="site-info debug">-------------------------------------</span><br>';
 	
 	//-------------------------------------------
 	// make a list of all pages
@@ -85,48 +79,34 @@ function getContent($excludeTags,$includeTags){
 		$testPageId = intval($page->ID);
 		$tagPageList = explode(',',get_the_tag_list('',',','',$testPageId));
 		
-		//$returnContent .= '<span class="site-info debug">mo:'.$page->menu_order.' id: '.$testPageId.' title: '.$page->post_title.'</span><br>';
-		//$returnContent .= '<span class="site-info debug">tagList:'.$tagPageList.'</span><br>';
-		//$returnContent .= '<span class="site-info debug">tagList size :'. count($tagPageList).'</span><br>';
+// 		$returnContent .= '<span class="site-info debug">mo:'.$page->menu_order.' id: '.$testPageId.' title: '.$page->post_title.'</span><br>';
+// 		$returnContent .= '<span class="site-info debug">tagList:'.implode(' ',$tagPageList.'</span><br>');
+// 		$returnContent .= '<span class="site-info debug">tagList size :'. count($tagPageList).'</span><br>';
 		
 		for ($loop = 0; $loop < count($tagPageList); $loop++) {
 			$tagPageList[$loop] = delete_all_between('<', '>', $tagPageList[$loop]);
-//			$returnContent .= '<span class="site-info debug">tagitem:'.$loop.' :'.$tagPageList[$loop].':</span><br>';
-		
-			
-// 			for ($loopB = 0; $loopB < strlen($tagPageList[$loop]); $loopB++) {
-// 				
-// 				//$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.substr($tagPageList[$loop],$loopB,$loopB).':</span><br>';
-// 				
-// 				$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.$tagPageList[$loop][$loopB].':</span><br>';
-// 			}	
+
+			if (strpos($tagPageList[$loop], '>')){
+				$loop--;
+			}	
 			
 		}
 		
 		for ($loop = 0; $loop < count($tagPageList); $loop++) {
-			$tagPageList[$loop] = delete_all_between('<', '>', $tagPageList[$loop]);
-//			$returnContent .= '<span class="site-info debug">tagitem:'.$loop.' :'.$tagPageList[$loop].':</span><br>';
-		
 			
-// 			for ($loopB = 0; $loopB < strlen($tagPageList[$loop]); $loopB++) {
-// 				
-// 				//$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.substr($tagPageList[$loop],$loopB,$loopB).':</span><br>';
-// 				
-// 				$returnContent .= '<span class="site-info debug">        char:'.$loopB.' :'.$tagPageList[$loop][$loopB].':</span><br>';
-// 			}	
+			$singleTag = $tagPageList[$loop];
+// 			$returnContent .='<span class="site-info debug">tag :'.$loop.': '.$singleTag.'</span><br>';
 			
 		}
 		
-		// $thisPageTagsArray = array('Role');
-// 		
+// 		$returnContent .='<span class="site-info debug">-------------------------------------</span><br>';		
+// 		$returnContent .= '<span class="site-info debug">tagList:'.implode(' ',$tagPageList).'</span><br>');
+	
 		$containsSearch = count(array_intersect($thisPageTagsArray, $tagPageList)) == count($thisPageTagsArray);
 // 		
 // 		$returnContent .= '<span class="site-info debug">Match:'.$containsSearch.'</span><br>';
-// 		
-// 		$returnContent .='<span class="site-info debug">---------------</span><br>';
-					
+// 		$returnContent .='<span class="site-info debug">---------------</span><br>';		
 // 		$returnContent .= '<span class="site-info debug">mo:'.$page->menu_order.' id: '.$page->ID.' title: '.$page->post_title.'</span><br>';
-
 
 		if ($containsSearch){
 			$returnContent .= '<h2>'.$page->post_title. '</h2>';		
@@ -134,28 +114,6 @@ function getContent($excludeTags,$includeTags){
 		}
 	
 	}
-	
-	
-	
-	
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	
 	//--------------------------------------------------------------------------------
 	// All done, return outcome
