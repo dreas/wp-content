@@ -10,7 +10,7 @@ function getContent($excludeTags,$includeTags){
 	// get the tags in current page
 	
 	$thisPageTagsArray = explode(',',get_the_tag_list('',',',''));
-
+	$returnContent = '';
 	//-------------------------------------------
 	// Clean Array
 
@@ -55,12 +55,12 @@ function getContent($excludeTags,$includeTags){
 	
 	//$returnContent .='<span class="site-info debug">Updated Tags from page</span><br>';
 	
-	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
-		$singleTag = $thisPageTagsArray[$loop];
-
-		$returnContent .='<span class="site-info debug">'.$singleTag.', </span>';
-
-	}	
+// 	for ($loop = 0; $loop < count($thisPageTagsArray); $loop++) {
+// 		$singleTag = $thisPageTagsArray[$loop];
+// 
+// 		$returnContent .='<span class="site-info debug">'.$singleTag.', </span>';
+// 
+// 	}	
 	
 // 	$returnContent .='<span class="site-info debug">-------------------------------------</span><br>';
 	
